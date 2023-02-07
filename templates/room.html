@@ -24,9 +24,12 @@
 								<p class="card-text text-black">{{ room.description }}</p>
 								{% for message in room_messages %}
 									<div class="card">
-										<div class="card-header text-black">
+										<div class="card-header text-black d-flex justify-content-end">
 											<small>@{{ message.user }} {{ message.created|timesince }}</small>
-											<button class="btn btn-danger" href="">Delete</button>
+											{% if request.user == message.user %}
+												<a class="btn btn-danger" href="{% url "delete-message" message.id %}"
+												   type="submit">Delete</a>
+											{% endif %}
 										</div>
 
 										<div class="card-body">
@@ -38,7 +41,9 @@
 											<div class="card-body">
 												<form method="POST" action="">
 													{% csrf_token %}
-													<input type="text" name="comment" class="form-control bg-danger-subtle" placeholder="comment here">
+													<input type="text" name="comment"
+													       class="form-control bg-danger-subtle"
+													       placeholder="comment here">
 												</form>
 											</div>
 										</div>
@@ -55,12 +60,12 @@
 
 			<div class="col-md-3">
 				<h1 class="text-black">Participants</h1>
+				{% for participant in participants %}
+					<div class="list-group bg-gradient">
+						<li class="list-group-item">{{ participant.username }}</li>
 
-				<div class="list-group">
-					<li class="list-group-item"></li>
-
-				</div>
-
+					</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
