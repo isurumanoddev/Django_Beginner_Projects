@@ -102,7 +102,13 @@ def user_logout(request):
 
 
 def user_register(request):
-    form = UserCreationForm(
-    )
+    form = UserCreationForm()
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            login(request, user)
+            return redirect("home")
     context = {"form": form}
     return render(request, "login_register.html", context)
