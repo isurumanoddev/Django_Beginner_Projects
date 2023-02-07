@@ -8,7 +8,12 @@ from base.models import Room, Message, Topic
 
 
 def home(request):
-    rooms = Room.objects.all()
+    if request.GET.get("q") is not None:
+        q = request.GET.get("q")
+        print(q)
+    else:
+        q = ""
+    rooms= Room.objects.filter(topic__name__contains=q)
     topics = Topic.objects.all()
     context = {"rooms": rooms, "topics": topics}
     return render(request, "home.html", context)
