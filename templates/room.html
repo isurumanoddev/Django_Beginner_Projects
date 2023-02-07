@@ -17,14 +17,15 @@
 				<h1 class="text-black">Coversation</h1>
 				<div class="row">
 					<div class="col">
+
 						<div class="card text-white bg-success-subtle mb-3">
 							<div class="card-body">
-								<h2 class="card-title text-black">{{ room.name }}</h2>
-								<p class="card-text text-black">{{ room.description }}</p>
-								{% for message in room_messages %}
+								<h2 class="card-title text-black">{{ room.topic }}</h2>
+								<p class="card-text text-black">{{ room.name }}</p>
+								{% for message in room_comments %}
 									<div class="card">
 										<div class="card-header text-black">
-											@{{ message.user }} {{ message.created|timesince }} ago
+
 
 										</div>
 
@@ -36,19 +37,18 @@
 										</div>
 									</div>
 								{% endfor %}
-								{% if request.user.is_authenticated %}
-									<div class="card">
-										<div class="card-body">
-											<form method="POST" action="">
-												{% csrf_token %}
-												<input type="text" name="comment" placeholder="add your comment here"
-												       class="form-control bg-primary-subtle">
+								{#									<div class="card">#}
+								{#										<div class="card-body">#}
+								{#											<form method="POST" action="">#}
+								{##}
+								{#												<input type="text" name="comment" placeholder="add your comment here"#}
+								{#												       class="form-control bg-primary-subtle">#}
+								{##}
+								{#											</form>#}
+								{##}
+								{#										</div>#}
+								{#									</div>#}
 
-											</form>
-
-										</div>
-									</div>
-								{% endif %}
 							</div>
 						</div>
 					</div>
@@ -57,12 +57,12 @@
 
 			<div class="col-md-3">
 				<h1 class="text-black">Participants</h1>
-				{% for participant in participants %}
-					<div class="list-group">
-						<li class="list-group-item">{{ participant }}</li>
 
-					</div>
-				{% endfor %}
+				<div class="list-group">
+					<li class="list-group-item"></li>
+
+				</div>
+
 			</div>
 		</div>
 	</div>
