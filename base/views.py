@@ -13,6 +13,7 @@ from base.models import Room, Message, Topic
 
 
 def home(request):
+
     if request.GET.get("q") is not None:
         q = request.GET.get("q")
         print(q)
@@ -20,7 +21,8 @@ def home(request):
         q = ""
     rooms = Room.objects.filter(topic__name__contains=q)
     topics = Topic.objects.all()
-    context = {"rooms": rooms, "topics": topics}
+    comments = Message.objects.filter(room__topic__name__icontains=q)
+    context = {"rooms": rooms, "topics": topics,"comments":comments}
     return render(request, "home.html", context)
 
 
@@ -34,6 +36,7 @@ def room(request, pk):
             room=room,
             body=request.POST.get("comment")
         )
+        room.participants.add(request.user)
         return redirect("room", pk=room.id)
     context = {"room": room, "room_messages": room_messages,"participants":participants}
     return render(request, "room.html", context)

@@ -30,7 +30,7 @@
 					</div>
 				{% endfor %}
 			</div>
-			<div class="col-md-9 ">
+			<div class="col-md-6 ">
 				<div class="col">
 					<a href="{% url "create-room" %}" class="btn btn-warning m-3 ">Create Room</a>
 					<h3 class="text-white"></h3>
@@ -68,6 +68,20 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="col-md-3 ">
+				<h3 class="display-5 text-center">Recent Activity</h3>
+				{% for comment in comments %}
+					<div class="card m-3">
+						<small class="card-header bg-dark text-light">@{{ comment.user }} {{ comment.created|timesince }} ago</small>
+					<div class="card-body bg-primary">
+						<h5 class="card-title">{{ comment.room }}</h5>
+
+						<p class="card-text">{{ comment.body }}</p>
+					</div>
+
+					</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
